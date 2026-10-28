@@ -16,7 +16,7 @@ const invitationTypes = [
 <BaseLayout title="Bookings" description="Invite Abochie Ministries to your church service, conference, revival meeting, crusade, or worship gathering.">
 	<section class="page-hero"><div class="wrap page-hero-content"><p class="eyebrow">Church & event invitations</p><h1>Bring the sound<br />of revival <em>to your gathering.</em></h1><p>Tell us about your service, conference, revival meeting, crusade, or worship gathering. The ministry team will review your invitation and get in touch.</p></div></section>
 	<section class="section wrap booking-layout">
-		<aside class="booking-aside"><p class="eyebrow">A few details</p><h2>Let's begin<br />the <em>conversation.</em></h2><p>Fields marked with * are required. Your information will only be used to respond to this invitation.</p><div class="booking-note"><span aria-hidden="true">✳</span><p>Booking requests are handled through Netlify Forms after this website is deployed. If you are viewing a local preview, submissions are not saved.</p></div></aside>
+		<aside class="booking-aside"><p class="eyebrow">A few details</p><h2>Let's begin<br />the <em>conversation.</em></h2><p>Fields marked with * are required. Your information will only be used to respond to this invitation.</p><div class="booking-note"><span aria-hidden="true">✳</span><p>On the live site, your request is recorded in Netlify Forms and the ministry is notified by email. A local preview does not save submissions.</p></div></aside>
 		<form class="booking-form" name="booking" method="POST" action="/bookings/success/" data-netlify="true" netlify-honeypot="bot-field">
 			<input type="hidden" name="form-name" value="booking" />
 			<p class="honeypot"><label>Leave this field empty: <input name="bot-field" /></label></p>
@@ -40,7 +40,7 @@ const invitationTypes = [
 			</div>
 			<label class="consent"><input type="checkbox" name="consent" value="yes" required /><span>I consent to Abochie Ministries using the information I have provided to respond to this invitation. *</span></label>
 			<button class="button submit-button" type="submit">Send invitation <span aria-hidden="true">↗</span></button>
-			<p class="form-privacy">Your request is submitted to the ministry through Netlify's form handling service. Do not include sensitive personal information.</p>
+			<p class="form-privacy">Your request is handled through Netlify Forms. Do not include sensitive personal information.</p>
 		</form>
 	</section>
 	<script>

@@ -17,7 +17,7 @@ const socialLinks = Object.entries(site.socials).filter(([, url]) => url);
 				{!site.email && !site.phone && !site.city && socialLinks.length === 0 && <div class="placeholder-note"><span aria-hidden="true">✳</span><p><strong>Contact details to be confirmed.</strong><br />Use the invitation form for a ministry booking enquiry.</p></div>}
 			</div>
 		</div>
-		<div class="contact-card"><p class="eyebrow">For church invitations</p><h3>Bring the ministry<br />to your gathering.</h3><p>Share your event details through the invitation form. Once the site is deployed on Netlify, your request will be captured in the site's form submissions.</p><a class="button" href="/bookings/">Submit an Invitation <span aria-hidden="true">↗</span></a></div>
+		<div class="contact-card"><p class="eyebrow">For church invitations</p><h3>Bring the ministry<br />to your gathering.</h3><p>Share your event details through the invitation form. Requests on the live site are recorded in Netlify Forms and email notifications are enabled.</p><a class="button" href="/bookings/">Submit an Invitation <span aria-hidden="true">↗</span></a></div>
 	</section>
 	<section class="section dark-section">
 		<div class="wrap contact-form-layout">
@@ -33,7 +33,7 @@ const socialLinks = Object.entries(site.socials).filter(([, url]) => url);
 				</div>
 				<label class="consent"><input type="checkbox" name="consent" value="yes" required /><span>I consent to Abochie Ministries using my details to respond to this enquiry. *</span></label>
 				<button class="button submit-button" type="submit">Send message <span aria-hidden="true">↗</span></button>
-				<p class="form-privacy">Your message is submitted through Netlify Forms after deployment. Do not include sensitive personal information.</p>
+				<p class="form-privacy">Your message is handled through Netlify Forms. Do not include sensitive personal information.</p>
 			</form>
 		</div>
 	</section>

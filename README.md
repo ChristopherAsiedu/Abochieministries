@@ -13,13 +13,9 @@ Create a production build with `npm run build`; the static site is written to `d
 
 ## Booking requests (Netlify Forms)
 
-The invitation form at `/bookings/` and general enquiry form at `/contact/` are Netlify-detected HTML forms with required-field validation, consent, and honeypot fields. Netlify stores submissions in the site's Forms area after deployment. Their confirmation pages are configured redirects after successful submissions; a local development preview does not save requests.
+The invitation form at `/bookings/` and general enquiry form at `/contact/` are registered Netlify Forms with required-field validation, consent, and honeypot fields. Netlify stores submissions in the site's Forms area. Their confirmation pages are configured redirects after successful submissions; a local development preview does not save requests.
 
-1. Deploy this site to Netlify and enable form detection for the site.
-2. Trigger a deploy so Netlify scans the generated HTML.
-3. Confirm the `booking` form appears in the Netlify site dashboard.
-4. Configure email notifications for new `booking` and `contact` submissions in the Netlify dashboard, addressed to the ministry's verified email.
-5. Send test requests and confirm they appear in the dashboard and notifications reach the intended recipient.
+The live site is `https://abochieministries.netlify.app/`. Form detection is enabled, and the `booking` and `contact` forms are listed in the Netlify Forms dashboard. Email notifications are configured for new submissions from any form and go to the ministry's designated notification email.
 
 Netlify Forms is a managed form-submission inbox, not a general-purpose database. Limit access to the Netlify site dashboard to authorized administrators, set a retention policy appropriate to the ministry, and do not request sensitive information in the form.
 

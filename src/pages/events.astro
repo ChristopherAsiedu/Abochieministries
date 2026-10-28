@@ -1,0 +1,26 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+interface MinistryEvent {
+	title: string;
+	slug: string;
+	description: string;
+	status: 'upcoming' | 'completed' | 'announcement-pending';
+	date: string;
+	venue: string;
+	image: string;
+}
+
+const events = Object.values(import.meta.glob<MinistryEvent>('../content/events/*.json', {
+	eager: true,
+	import: 'default',
+})).sort((a, b) => a.title.localeCompare(b.title));
+---
+
+<BaseLayout title="Events" description="Explore Peniel Praise, School of the Holy Spirit, and ministry gatherings from Abochie Ministries.">
+	<section class="page-hero"><div class="wrap page-hero-content"><p class="eyebrow">Gather in His presence</p><h1>Worship. Word.<br /><em>Encounter.</em></h1><p>Discover the flagship gatherings and ministry programmes of Abochie Ministries.</p></div></section>
+	<section class="section wrap event-list">
+		{events.map((event, index) => <article class="event-detail" id={event.slug}><div class="event-detail-art">{event.image && <img src={event.image} alt={`${event.title} ministry gathering`} />}<span class="event-index">0{index + 1}</span><span class="event-orbit" aria-hidden="true"></span><span class="event-word" aria-hidden="true">{event.title.includes('Peniel') ? 'P' : 'S'}</span></div><div class="event-detail-copy"><p class="eyebrow">{event.title.includes('Peniel') ? 'Worship & praise' : 'Teaching & spiritual growth'}</p><h2>{event.title}</h2><p>{event.description}</p><div class="event-facts"><p><span>When</span>{event.date || 'Upcoming Event Announcement Coming Soon'}</p><p><span>Where</span>{event.venue || 'Details to be announced'}</p><p><span>Status</span>{event.status === 'announcement-pending' ? 'Announcement pending' : event.status}</p></div><a class="text-link" href="/bookings/">Enquire about this event <span aria-hidden="true">↗</span></a></div></article>)}
+	</section>
+	<section class="section dark-section"><div class="wrap section-heading"><div><p class="eyebrow">Beyond the flagship gatherings</p><h2>Ministry in <em>every place.</em></h2><p>Church services, conferences, revival meetings, rural crusades, and evangelism outreaches.</p></div><a class="button" href="/bookings/">Invite the Ministry <span aria-hidden="true">↗</span></a></div></section>
+</BaseLayout>

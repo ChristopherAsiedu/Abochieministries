@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import site from '../data/site.json';
+---
+
+<BaseLayout title="About" description="Learn about the vision and mandate of Abochie Ministries: reaching souls for Christ through worship, praise, prophetic ministration, and evangelism.">
+	<section class="page-hero">
+		<div class="wrap page-hero-content"><p class="eyebrow">The ministry</p><h1>A heart for worship.<br /><em>A mandate for souls.</em></h1><p>{site.ministryDescription}</p></div>
+	</section>
+	<section class="section wrap narrative-grid">
+		<div class="narrative-aside"><span class="section-number">01</span><p>Our mandate</p></div>
+		<div class="narrative-body"><h2>Worship that points<br />the way to <em>Jesus.</em></h2><p>{site.ministryDescription}</p><p>{site.vision}</p><div class="value-list"><div><span>01</span><b>Worship & praise</b></div><div><span>02</span><b>Prophetic ministration</b></div><div><span>03</span><b>Evangelism & revival</b></div></div></div>
+	</section>
+	<section class="about-portrait-section">
+		<div class="wrap about-portrait-grid">
+			<img src="/images/minister-portrait-gray.jpg" alt="Portrait of the Abochie Ministries minister" loading="lazy" />
+			<div><p class="eyebrow">The ministry leader</p><h2>A life given to<br /><em>worship and service.</em></h2>{site.biography ? <p>{site.biography}</p> : <p>A biography and ministry journey will be added when the ministry supplies the approved details.</p>}</div>
+		</div>
+	</section>
+	<section class="section dark-section"><div class="wrap narrative-grid"><div class="narrative-aside"><span class="section-number">02</span><p>Our vision</p></div><div class="narrative-body"><p class="eyebrow">A people encountering God's presence</p><h2>Making room for<br /><em>the move of the Spirit.</em></h2><p>{site.vision}</p><p>Peniel Praise is a gathering for passionate worship and praise, while the School of the Holy Spirit (SOTHS) creates space for teaching, spiritual growth, and deeper engagement with the work of the Holy Spirit.</p><p>From worship gatherings to rural crusades and evangelism, the ministry seeks to carry the Gospel beyond church walls and reach people with the message of Jesus Christ.</p></div></div></section>
+	<section class="section wrap narrative-grid">
+		<div class="narrative-aside"><span class="section-number">03</span><p>The journey</p></div>
+		<div class="narrative-body"><p class="eyebrow">Abochie Ministries</p><h2>Our story is still <em>unfolding.</em></h2>{site.biography ? <p>{site.biography}</p> : <div class="placeholder-note"><span aria-hidden="true">✳</span><p><strong>Biography and ministry history to be added.</strong><br />This space is ready for the artiste's biography, ministry journey, confirmed testimonies, and milestones once supplied by the ministry.</p></div>}<a class="text-link" href="/bookings/">Invite the Ministry <span aria-hidden="true">↗</span></a></div>
+	</section>
+</BaseLayout>

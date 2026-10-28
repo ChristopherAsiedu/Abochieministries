@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const invitationTypes = [
+	'Church service',
+	'Worship and praise programme',
+	'Revival meeting',
+	'Conference or convention',
+	'Crusade or evangelism',
+	'Youth programme',
+	'Special ministry invitation',
+	'Other',
+];
+---
+
+<BaseLayout title="Bookings" description="Invite Abochie Ministries to your church service, conference, revival meeting, crusade, or worship gathering.">
+	<section class="page-hero"><div class="wrap page-hero-content"><p class="eyebrow">Church & event invitations</p><h1>Bring the sound<br />of revival <em>to your gathering.</em></h1><p>Tell us about your service, conference, revival meeting, crusade, or worship gathering. The ministry team will review your invitation and get in touch.</p></div></section>
+	<section class="section wrap booking-layout">
+		<aside class="booking-aside"><p class="eyebrow">A few details</p><h2>Let's begin<br />the <em>conversation.</em></h2><p>Fields marked with * are required. Your information will only be used to respond to this invitation.</p><div class="booking-note"><span aria-hidden="true">✳</span><p>Booking requests are handled through Netlify Forms after this website is deployed. If you are viewing a local preview, submissions are not saved.</p></div></aside>
+		<form class="booking-form" name="booking" method="POST" action="/bookings/success/" data-netlify="true" netlify-honeypot="bot-field">
+			<input type="hidden" name="form-name" value="booking" />
+			<p class="honeypot"><label>Leave this field empty: <input name="bot-field" /></label></p>
+			<div class="form-section-title"><span>01</span><h2>Your details</h2></div>
+			<div class="form-grid">
+				<label>Full name *<input name="full-name" autocomplete="name" required /></label>
+				<label>Church or organization *<input name="organization" autocomplete="organization" required /></label>
+				<label>Email address *<input type="email" name="email" autocomplete="email" required /></label>
+				<label>Phone or WhatsApp number *<input type="tel" name="phone" autocomplete="tel" pattern="\+?[0-9]{7,15}" placeholder="+233XXXXXXXXX" title="Enter 7 to 15 digits, with an optional leading + country code." required /></label>
+				<label>Country and city *<input name="location" required /></label>
+				<label>Type of invitation *<select name="invitation-type" required><option value="" disabled selected>Select an invitation type</option>{invitationTypes.map((type) => <option value={type}>{type}</option>)}</select></label>
+			</div>
+			<div class="form-section-title"><span>02</span><h2>Event details</h2></div>
+			<div class="form-grid">
+				<label>Proposed event date *<input type="date" name="event-date" required /></label>
+				<label>Alternative date <span class="optional">(optional)</span><input type="date" name="alternative-date" /></label>
+				<label>Event venue *<input name="venue" required /></label>
+				<label>Expected audience size <span class="optional">(optional)</span><input type="number" name="audience-size" min="1" inputmode="numeric" /></label>
+				<label class="form-full">Brief description of the event *<textarea name="event-description" rows="4" required></textarea></label>
+				<label class="form-full">Additional message <span class="optional">(optional)</span><textarea name="message" rows="3"></textarea></label>
+			</div>
+			<label class="consent"><input type="checkbox" name="consent" value="yes" required /><span>I consent to Abochie Ministries using the information I have provided to respond to this invitation. *</span></label>
+			<button class="button submit-button" type="submit">Send invitation <span aria-hidden="true">↗</span></button>
+			<p class="form-privacy">Your request is submitted to the ministry through Netlify's form handling service. Do not include sensitive personal information.</p>
+		</form>
+	</section>
+	<script>
+		const bookingForm = document.querySelector<HTMLFormElement>('form[name="booking"]');
+		const submitButton = bookingForm?.querySelector<HTMLButtonElement>('button[type="submit"]');
+		let submitted = false;
+		bookingForm?.addEventListener('submit', (event) => {
+			if (submitted) {
+				event.preventDefault();
+				return;
+			}
+			if (bookingForm.checkValidity()) {
+				submitted = true;
+				if (submitButton) {
+					submitButton.disabled = true;
+					submitButton.textContent = 'Sending invitation…';
+				}
+			}
+		});
+	</script>
+</BaseLayout>

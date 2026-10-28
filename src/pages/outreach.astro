@@ -1,0 +1,20 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+interface OutreachStory {
+	title: string;
+	description: string;
+	image: string;
+}
+const stories = Object.values(import.meta.glob<OutreachStory>('../content/outreach/*.json', {
+	eager: true,
+	import: 'default',
+})).filter((story) => story.title);
+---
+
+<BaseLayout title="Outreach" description="Abochie Ministries takes the Gospel beyond church walls through rural crusades and evangelism.">
+	<section class="page-hero"><div class="wrap page-hero-content"><p class="eyebrow">Faith beyond the walls</p><h1>Taking the Gospel<br /><em>to every place.</em></h1><p>Worship is a sound, and the Gospel is a message to carry. We are committed to reaching people and communities with the hope of Jesus Christ.</p></div></section>
+	<section class="section wrap outreach-page-intro"><div class="outreach-symbol" aria-hidden="true">↗</div><div><p class="eyebrow">Rural crusades & evangelism</p><h2>Carrying the message<br />of Jesus <em>into communities.</em></h2><p>From rural outdoor crusades to community evangelism, the ministry's heart is to take the Gospel beyond church walls. Confirmed stories, photos, and future outreach announcements will be shared here as they are provided.</p></div></section>
+	<section class="section dark-section"><div class="wrap"><div class="section-heading"><div><p class="eyebrow">Confirmed outreach stories</p><h2>Stories from the <em>field.</em></h2></div></div>{stories.length ? <div class="story-grid">{stories.map((story) => <article class="story-card"><div class="story-image">{story.image && <img src={story.image} alt="" loading="lazy" />}</div><h3>{story.title}</h3><p>{story.description}</p></article>)}</div> : <div class="placeholder-note placeholder-note-dark"><span aria-hidden="true">✳</span><p><strong>Outreach stories and photographs will be added here.</strong><br />Only ministry-supplied outreach media and confirmed testimonies will be published.</p></div>}</div></section>
+	<section class="section wrap partner-callout"><div><p class="eyebrow">Walk alongside the work</p><h2>Partner with the <em>outreach.</em></h2><p>For now, please get in touch to enquire about outreach collaboration. Verified partnership details will be shared when available.</p></div><a class="button button-outline" href="/contact/">Get in touch <span aria-hidden="true">↗</span></a></section>
+</BaseLayout>

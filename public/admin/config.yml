@@ -1,0 +1,91 @@
+backend:
+  name: git-gateway
+  branch: main
+
+publish_mode: editorial_workflow
+media_folder: public/uploads
+public_folder: /uploads
+
+collections:
+  - name: site
+    label: Ministry details
+    files:
+      - name: details
+        label: Ministry details
+        file: src/data/site.json
+        format: json
+        fields:
+          - { label: Ministry description, name: ministryDescription, widget: text }
+          - { label: Vision, name: vision, widget: text }
+          - { label: Biography, name: biography, widget: text, required: false }
+          - { label: Official email, name: email, widget: string, required: false }
+          - { label: Booking phone / WhatsApp, name: phone, widget: string, required: false }
+          - { label: City, name: city, widget: string, required: false }
+          - label: Official platform and social links
+            name: socials
+            widget: object
+            fields:
+              - { label: YouTube, name: YouTube, widget: string, required: false }
+              - { label: Spotify, name: Spotify, widget: string, required: false }
+              - { label: Apple Music, name: Apple Music, widget: string, required: false }
+              - { label: YouTube Music, name: YouTube Music, widget: string, required: false }
+              - { label: Audiomack, name: Audiomack, widget: string, required: false }
+              - { label: Boomplay, name: Boomplay, widget: string, required: false }
+              - { label: Facebook, name: Facebook, widget: string, required: false }
+              - { label: Instagram, name: Instagram, widget: string, required: false }
+              - { label: TikTok, name: TikTok, widget: string, required: false }
+  - name: events
+    label: Events
+    folder: src/content/events
+    create: true
+    extension: json
+    format: json
+    slug: "{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: URL slug, name: slug, widget: string }
+      - { label: Description, name: description, widget: text }
+      - label: Status
+        name: status
+        widget: select
+        options:
+          - { label: Announcement pending, value: announcement-pending }
+          - { label: Upcoming, value: upcoming }
+          - { label: Completed, value: completed }
+      - { label: Date or announcement, name: date, widget: string, required: false }
+      - { label: Venue, name: venue, widget: string, required: false }
+      - { label: Event image, name: image, widget: image, required: false }
+  - name: music
+    label: Music releases
+    folder: src/content/music
+    create: true
+    extension: json
+    format: json
+    slug: "{{slug}}"
+    fields:
+      - { label: Release title, name: title, widget: string }
+      - { label: Project title, name: project, widget: string, required: false }
+      - { label: Release date, name: releaseDate, widget: string, required: false }
+      - { label: Category, name: category, widget: select, options: [Single, Album, Live Worship, Music Video] }
+      - { label: Cover artwork, name: artwork, widget: image, required: false }
+      - label: Official music links
+        name: links
+        widget: object
+        fields:
+          - { label: Spotify, name: Spotify, widget: string, required: false }
+          - { label: Apple Music, name: Apple Music, widget: string, required: false }
+          - { label: YouTube Music, name: YouTube Music, widget: string, required: false }
+          - { label: Audiomack, name: Audiomack, widget: string, required: false }
+          - { label: Boomplay, name: Boomplay, widget: string, required: false }
+          - { label: YouTube, name: YouTube, widget: string, required: false }
+  - name: outreach
+    label: Outreach stories
+    folder: src/content/outreach
+    create: true
+    extension: json
+    format: json
+    slug: "{{slug}}"
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Story, name: description, widget: text }
+      - { label: Ministry photo, name: image, widget: image, required: false }

@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import site from '../data/site.json';
+
+interface Release {
+	title: string;
+	project: string;
+	releaseDate: string;
+	artwork: string;
+	category: string;
+	links: Record<string, string>;
+}
+
+const releases = Object.values(import.meta.glob<Release>('../content/music/*.json', {
+	eager: true,
+	import: 'default',
+})).filter((release) => release.title);
+const socialLinks = Object.entries(site.socials).filter(([, url]) => url);
+---
+
+<BaseLayout title="Music" description="Discover music and worship releases from Abochie Ministries.">
+	<section class="page-hero">
+		<div class="wrap page-hero-content"><p class="eyebrow">Music & worship</p><h1>Songs that carry<br /><em>a sound of revival.</em></h1><p>Discover worship, praise, and live recordings from Abochie Ministries.</p></div>
+	</section>
+	<section class="section wrap">
+		{releases.length ? <div class="release-grid">{releases.map((release) => <article class="release-card"><div class="release-cover">{release.artwork && <img src={release.artwork} alt={`${release.title} cover art`} />}<span aria-hidden="true">AM</span></div><p class="eyebrow">{release.category} {release.releaseDate && `· ${release.releaseDate}`}</p><h2>{release.title}</h2><p>{release.project}</p><div class="platform-links">{Object.entries(release.links).filter(([, url]) => url).map(([platform, url]) => <a href={url} target="_blank" rel="noreferrer">{platform} ↗</a>)}</div></article>)}</div> : <div class="empty-state"><div class="empty-disc" aria-hidden="true"><span></span></div><p class="eyebrow">The sound is coming</p><h2>Music releases<br /><em>coming soon.</em></h2><p>Official releases and listening links will be shared here when available.</p>{socialLinks.length > 0 && <div class="platform-links">{socialLinks.map(([platform, url]) => <a href={url} target="_blank" rel="noreferrer">Follow on {platform} ↗</a>)}</div>}</div>}
+	</section>
+	<section class="connect-band">
+		<div class="wrap connect-inner">
+			<div><p class="eyebrow">Connect with the ministry</p><p>Follow official music and ministry updates.</p></div>
+			<div class="connect-links">
+				{socialLinks.length ? socialLinks.map(([platform, url]) => <a href={url} target="_blank" rel="noreferrer">{platform} ↗</a>) : <span>Official platform links will be added when confirmed.</span>}
+			</div>
+		</div>
+	</section>
+</BaseLayout>

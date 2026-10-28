@@ -1,0 +1,34 @@
+---
+import site from '../data/site.json';
+
+const socialLinks = Object.entries(site.socials).filter(([, url]) => url);
+---
+
+<footer class="site-footer">
+	<div class="footer-main">
+		<div class="footer-brand">
+			<a class="brand" href="/" aria-label="Abochie Ministries home">
+				<img class="brand-logo" src="/images/abochie-ministries-logo.jpg" alt="Abochie Ministries" />
+			</a>
+			<p>Carrying the sound of revival through worship, praise, prophetic ministration, and evangelism.</p>
+		</div>
+		<div>
+			<h2>Explore</h2>
+			<a href="/about/">About the Ministry</a>
+			<a href="/music/">Music</a>
+			<a href="/events/">Events</a>
+			<a href="/outreach/">Outreach</a>
+		</div>
+		<div>
+			<h2>Connect</h2>
+			<a href="/bookings/">Invite the Ministry</a>
+			<a href="/contact/">Contact</a>
+			{socialLinks.map(([platform, url]) => <a href={url} target="_blank" rel="noreferrer">{platform}</a>)}
+			{site.email && <a href={`mailto:${site.email}`}>{site.email}</a>}
+		</div>
+	</div>
+	<div class="footer-bottom">
+		<span>© {new Date().getFullYear()} Abochie Ministries</span>
+		<span>Worship. Revival. The Gospel.</span>
+	</div>
+</footer>

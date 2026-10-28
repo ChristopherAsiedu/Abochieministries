@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import site from '../data/site.json';
+
+const socialLinks = Object.entries(site.socials).filter(([, url]) => url);
+---
+
+<BaseLayout title="Contact" description="Contact Abochie Ministries for invitations, ministry collaborations, and event enquiries.">
+	<section class="page-hero"><div class="wrap page-hero-content"><p class="eyebrow">Start a conversation</p><h1>Let's make room<br /><em>for an encounter.</em></h1><p>Churches, ministry leaders, and event organizers are welcome to get in touch about invitations and collaborations.</p></div></section>
+	<section class="section wrap contact-grid">
+		<div><p class="eyebrow">Connect with the ministry</p><h2>We'd be glad<br />to hear <em>from you.</em></h2><p>Official contact and social media details will appear here once confirmed by the ministry.</p>
+			<div class="contact-list">
+				{site.email && <p><span>Email</span><a href={`mailto:${site.email}`}>{site.email}</a></p>}
+				{site.phone && <p><span>Phone / WhatsApp</span><a href={`tel:${site.phone}`}>{site.phone}</a></p>}
+				{site.city && <p><span>Location</span>{site.city}</p>}
+				{socialLinks.map(([platform, url]) => <p><span>{platform}</span><a href={url} target="_blank" rel="noreferrer">Connect ↗</a></p>)}
+				{!site.email && !site.phone && !site.city && socialLinks.length === 0 && <div class="placeholder-note"><span aria-hidden="true">✳</span><p><strong>Contact details to be confirmed.</strong><br />Use the invitation form for a ministry booking enquiry.</p></div>}
+			</div>
+		</div>
+		<div class="contact-card"><p class="eyebrow">For church invitations</p><h3>Bring the ministry<br />to your gathering.</h3><p>Share your event details through the invitation form. Once the site is deployed on Netlify, your request will be captured in the site's form submissions.</p><a class="button" href="/bookings/">Submit an Invitation <span aria-hidden="true">↗</span></a></div>
+	</section>
+	<section class="section dark-section">
+		<div class="wrap contact-form-layout">
+			<div><p class="eyebrow">General enquiries</p><h2>Send us<br /><em>a message.</em></h2><p>For collaborations and other enquiries, leave a message and the ministry team will respond using the email address you provide.</p></div>
+			<form class="booking-form contact-form" name="contact" method="POST" action="/contact/success/" data-netlify="true" netlify-honeypot="contact-bot-field">
+				<input type="hidden" name="form-name" value="contact" />
+				<p class="honeypot"><label>Leave this field empty: <input name="contact-bot-field" /></label></p>
+				<div class="form-grid">
+					<label>Full name *<input name="full-name" autocomplete="name" required /></label>
+					<label>Email address *<input type="email" name="email" autocomplete="email" required /></label>
+					<label class="form-full">Subject<input name="subject" /></label>
+					<label class="form-full">Message *<textarea name="message" rows="5" required></textarea></label>
+				</div>
+				<label class="consent"><input type="checkbox" name="consent" value="yes" required /><span>I consent to Abochie Ministries using my details to respond to this enquiry. *</span></label>
+				<button class="button submit-button" type="submit">Send message <span aria-hidden="true">↗</span></button>
+				<p class="form-privacy">Your message is submitted through Netlify Forms after deployment. Do not include sensitive personal information.</p>
+			</form>
+		</div>
+	</section>
+	<script>
+		const contactForm = document.querySelector<HTMLFormElement>('form[name="contact"]');
+		const contactSubmitButton = contactForm?.querySelector<HTMLButtonElement>('button[type="submit"]');
+		let contactSubmitted = false;
+		contactForm?.addEventListener('submit', (event) => {
+			if (contactSubmitted) {
+				event.preventDefault();
+				return;
+			}
+			if (contactForm.checkValidity()) {
+				contactSubmitted = true;
+				if (contactSubmitButton) {
+					contactSubmitButton.disabled = true;
+					contactSubmitButton.textContent = 'Sending message…';
+				}
+			}
+		});
+	</script>
+</BaseLayout>

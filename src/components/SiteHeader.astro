@@ -1,0 +1,27 @@
+---
+const links = [
+	{ href: '/', label: 'Home' },
+	{ href: '/about/', label: 'About' },
+	{ href: '/music/', label: 'Music' },
+	{ href: '/events/', label: 'Events' },
+	{ href: '/outreach/', label: 'Outreach' },
+	{ href: '/contact/', label: 'Contact' },
+];
+---
+
+<header class="site-header">
+	<a class="brand" href="/" aria-label="Abochie Ministries home">
+		<img class="brand-logo" src="/images/abochie-ministries-logo.jpg" alt="Abochie Ministries" />
+	</a>
+	<nav class="desktop-nav" aria-label="Main navigation">
+		{links.map((link) => <a href={link.href}>{link.label}</a>)}
+		<a class="button button-small" href="/bookings/">Invite the Ministry</a>
+	</nav>
+	<details class="mobile-nav">
+		<summary aria-label="Open navigation menu"><span></span><span></span><span></span></summary>
+		<nav aria-label="Mobile navigation">
+			{links.map((link) => <a href={link.href}>{link.label}</a>)}
+			<a class="button" href="/bookings/">Invite the Ministry</a>
+		</nav>
+	</details>
+</header>

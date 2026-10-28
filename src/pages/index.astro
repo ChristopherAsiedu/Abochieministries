@@ -1,0 +1,159 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import site from '../data/site.json';
+
+interface MinistryEvent {
+	title: string;
+	slug: string;
+	description: string;
+	status: string;
+	date: string;
+	venue: string;
+	image: string;
+}
+
+const events = Object.values(import.meta.glob<MinistryEvent>('../content/events/*.json', {
+	eager: true,
+	import: 'default',
+})).sort((a, b) => a.title.localeCompare(b.title));
+
+interface Release {
+	title: string;
+	project: string;
+	releaseDate: string;
+	artwork: string;
+	links: Record<string, string>;
+}
+
+const latestRelease = Object.values(import.meta.glob<Release>('../content/music/*.json', {
+	eager: true,
+	import: 'default',
+})).filter((release) => release.title)[0];
+---
+
+<BaseLayout title="Home" description="Abochie Ministries carries the sound of revival through worship, praise, prophetic ministration, and evangelism.">
+	<section class="hero">
+		<img class="hero-image" src="/images/worship-stage-wide.jpg" alt="" fetchpriority="high" />
+		<div class="hero-light hero-light-one" aria-hidden="true"></div>
+		<div class="hero-light hero-light-two" aria-hidden="true"></div>
+		<div class="hero-content wrap">
+			<p class="eyebrow"><span class="eyebrow-line"></span> A ministry of worship and revival</p>
+			<h1>Carrying the Sound<br />of <em>Revival</em> to the Nations.</h1>
+			<p class="hero-copy">{site.ministryDescription} A ministry committed to stirring hearts and creating space for an encounter with God's presence.</p>
+			<div class="button-row">
+				<a class="button" href="/bookings/">Invite the Ministry <span aria-hidden="true">↗</span></a>
+				<a class="button button-outline" href="/music/">Listen to Our Music <span aria-hidden="true">→</span></a>
+				<a class="button button-outline" href="/events/">Explore Events <span aria-hidden="true">→</span></a>
+			</div>
+			<a class="hero-scroll" href="#ministry">Discover the ministry <span aria-hidden="true">↓</span></a>
+		</div>
+		<div class="hero-caption"><span>Worship</span><i></i><span>Revival</span><i></i><span>The Gospel</span></div>
+	</section>
+
+	<section class="intro-section section wrap" id="ministry">
+		<div class="intro-label"><span class="section-number">01</span><span>Our heart</span></div>
+		<div class="intro-copy">
+			<p class="eyebrow">A sound with a purpose</p>
+			<h2>More than a gathering.<br /><em>A call to encounter.</em></h2>
+			<p>{site.vision}</p>
+			<a class="text-link" href="/about/">Discover Abochie Ministries <span aria-hidden="true">↗</span></a>
+		</div>
+		<div class="intro-art">
+			<img class="intro-portrait" src="/images/minister-portrait-blue.png" alt="Abochie Ministries minister in a blue suit" loading="lazy" />
+			<div class="art-ring art-ring-one"></div><div class="art-ring art-ring-two"></div>
+			<div class="art-quote"><div class="art-star">✳</div><p>“Let everything<br />that has breath<br /><em>praise the Lord.</em>”<span>PSALM 150:6</span></p></div>
+		</div>
+	</section>
+
+	<section class="section dark-section">
+		<div class="wrap">
+			<div class="section-heading">
+				<div><p class="eyebrow">Gather with us</p><h2>Spaces for <em>encounter.</em></h2></div>
+				<a class="text-link" href="/events/">Explore all events <span aria-hidden="true">↗</span></a>
+			</div>
+			<div class="event-grid">
+				{events.map((event, index) => (
+					<article class={`event-card event-card-${index + 1}`}>
+						<div class="event-visual">
+							{event.image && <img src={event.image} alt={`${event.title} ministry gathering`} />}
+							<span class="event-index">0{index + 1}</span><span class="event-orbit" aria-hidden="true"></span><span class="event-word" aria-hidden="true">{event.title.includes('Peniel') ? 'P' : 'S'}</span>
+						</div>
+						<div class="event-info">
+							<p class="eyebrow">{event.title.includes('Peniel') ? 'Worship & praise' : 'Teaching & spiritual growth'}</p>
+							<h3>{event.title}</h3>
+							<p>{event.description}</p>
+							<p class="event-status">{event.status === 'announcement-pending' ? 'Upcoming Event Announcement Coming Soon' : event.date || 'Event details coming soon'}</p>
+							<a class="text-link" href={`/events/#${event.slug}`}>Explore event <span aria-hidden="true">↗</span></a>
+						</div>
+					</article>
+				))}
+			</div>
+		</div>
+	</section>
+
+	<section class="section music-feature wrap">
+		<div class="music-art">
+			{latestRelease?.artwork && <img class="featured-artwork" src={latestRelease.artwork} alt={`${latestRelease.title} cover art`} />}
+			<div class="music-disc" aria-hidden="true"><span></span></div><div class="music-art-type" aria-hidden="true">A<br />M</div>
+		</div>
+		<div class="music-copy">
+			{latestRelease ? <>
+				<p class="eyebrow">Latest release{latestRelease.releaseDate && ` · ${latestRelease.releaseDate}`}</p>
+				<h2>{latestRelease.title}</h2>
+				<p>{latestRelease.project || 'A worship release from Abochie Ministries.'}</p>
+				<div class="platform-links">{Object.entries(latestRelease.links).filter(([, url]) => url).map(([platform, url]) => <a href={url} target="_blank" rel="noreferrer">Listen on {platform} ↗</a>)}</div>
+			</> : <>
+				<p class="eyebrow">Songs for the journey</p>
+				<h2>Worship that draws<br />the heart <em>closer.</em></h2>
+				<p>Music and live worship from Abochie Ministries will be shared here as releases and official listening links are confirmed.</p>
+			</>}
+			<a class="button button-outline" href="/music/">{latestRelease ? 'View all releases' : 'Explore music'} <span aria-hidden="true">→</span></a>
+		</div>
+		<span class="music-watermark" aria-hidden="true">SOUND</span>
+	</section>
+
+	<section class="connect-band">
+		<div class="wrap connect-inner">
+			<div><p class="eyebrow">Connect with the ministry</p><p>Follow official music and ministry updates.</p></div>
+			<div class="connect-links">
+				{Object.entries(site.socials).filter(([, url]) => url).map(([platform, url]) => <a href={url} target="_blank" rel="noreferrer">{platform} ↗</a>)}
+				{!Object.values(site.socials).some(Boolean) && <span>Official platform links will be added when confirmed.</span>}
+			</div>
+		</div>
+	</section>
+
+	<section class="section dark-section">
+		<div class="wrap">
+			<div class="section-heading">
+				<div><p class="eyebrow">The ministry in action</p><h2>Worship in <em>the gathering.</em></h2></div>
+				<a class="text-link" href="/outreach/">Explore outreach <span aria-hidden="true">↗</span></a>
+			</div>
+			<div class="ministry-gallery">
+				<figure class="gallery-image gallery-image-wide"><img src="/images/worship-stage-wide.jpg" alt="Abochie Ministries ministering with the worship team on stage" loading="lazy" /><figcaption>Worship gathering</figcaption></figure>
+				<figure class="gallery-image"><img src="/images/worship-prayer.jpg" alt="Abochie Ministries minister kneeling in prayer while holding a microphone" loading="lazy" /><figcaption>A moment of prayer</figcaption></figure>
+				<figure class="gallery-image"><img src="/images/worship-ministering.jpg" alt="Abochie Ministries minister leading worship on stage" loading="lazy" /><figcaption>Leading worship</figcaption></figure>
+			</div>
+		</div>
+	</section>
+
+	<section class="section outreach-strip">
+		<div class="wrap outreach-content">
+			<div class="outreach-stamp" aria-hidden="true"><span>THE GOSPEL</span><b>↗</b><span>BEYOND WALLS</span></div>
+			<div>
+				<p class="eyebrow">Faith in action</p>
+				<h2>Taking the Gospel<br /><em>beyond the walls.</em></h2>
+				<p>Through evangelism and rural outreach, we carry the message of Jesus Christ into communities and beyond the church walls.</p>
+				<a class="text-link" href="/outreach/">Explore our outreach <span aria-hidden="true">↗</span></a>
+			</div>
+		</div>
+	</section>
+
+	<section class="invitation-cta">
+		<div class="wrap cta-inner">
+			<p class="eyebrow">For churches, ministries & event organizers</p>
+			<h2>Bring the Sound of Revival<br /><em>to your gathering.</em></h2>
+			<p>Invite Abochie Ministries to minister at your next church service, conference, revival meeting, crusade, or worship gathering.</p>
+			<a class="button" href="/bookings/">Submit an Invitation <span aria-hidden="true">↗</span></a>
+		</div>
+	</section>
+</BaseLayout>
